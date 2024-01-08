@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\RegisterUserJob;
+use App\Jobs\SendWellcomeEmail;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Queue\Queue as QueueQueue;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Queue as FacadesQueue;
 use Illuminate\Support\Facades\Validator;
+use RegisterUserJob as GlobalRegisterUserJob;
 
 class RegisterController extends Controller
 {
@@ -65,11 +71,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = [
             'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+        ];
+        SendWellcomeEmail::dispatch($user);
+        return User::create($user);
     }
 }
