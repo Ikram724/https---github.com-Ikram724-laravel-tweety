@@ -77,7 +77,9 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ];
-        SendWellcomeEmail::dispatch($user);
-        return User::create($user);
+
+        $u = User::create($user);
+        SendWellcomeEmail::dispatch($u);
+        return $u;
     }
 }

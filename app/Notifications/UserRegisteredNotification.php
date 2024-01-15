@@ -37,7 +37,7 @@ class UserRegisteredNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $user)
     {
-        return Mail::to($user->email)->send(new UserRegisterMail());
+        return Mail::to($user->email)->send(new UserRegisterMail($user));
     }
 
     /**

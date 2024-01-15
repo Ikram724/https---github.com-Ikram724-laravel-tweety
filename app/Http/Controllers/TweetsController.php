@@ -28,6 +28,6 @@ class TweetsController extends Controller
         ]);
 
 
-        return redirect('/tweets');
+        return back();
     }
 }

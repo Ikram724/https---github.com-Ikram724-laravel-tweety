@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class ProfilesController extends Controller
@@ -27,8 +28,9 @@ class ProfilesController extends Controller
 
     public function delete(Tweet $tweet)
     {
-        if (auth()->user()->id !== $tweet->user_id) {
-            abort(403, 'Unauthorized action.');
+
+        if (!Gate::allows('update-post', $tweet)) {
+            abort(403);
         }
         $tweet->delete();
         return redirect('/tweets')->with('success', 'Tweet deleted successfully.');

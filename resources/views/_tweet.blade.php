@@ -9,7 +9,7 @@
         </h5>
         <p class="text-sm">{{$tweet->body}}</p>
         @if($tweet->user_id === $user->id)
-        @can('edit',$user)
+
         <div class="mt-2">
             <form method="post" action="/tweet/delete/{{$tweet->id}}">
                 @csrf
@@ -19,7 +19,7 @@
             </form>
         </div>
 
-        @endcan
+
         @endif
         <div class="flex">
             <form method="post" action="/tweets/{{$tweet->id}}/like">
@@ -32,7 +32,7 @@
                             </g>
                         </g>
                     </svg>
-                    <button type="submit" class="text-xs">{{$tweet->like($user)? $tweet->likes :0}}</button>
+                    <button type="submit" class="text-xs">{{$tweet->likes ?: 0}}</button>
                 </div>
             </form>
             <form method="post" action="/tweets/{{$tweet->id}}/dislike">
@@ -46,7 +46,7 @@
                             </g>
                         </g>
                     </svg>
-                    <button type="submit" class="text-xs">{{$tweet->dislike($user)?$tweet->dislikes:0}}</button>
+                    <button type="submit" class="text-xs">{{$tweet->dislikes ?: 0}}</button>
 
                 </div>
             </form>

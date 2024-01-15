@@ -1,3 +1,4 @@
 <h2>
-    thanks for registering
+    thanks for registering.
+    {{$user->username}}
 </h2>

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(10)->create();
-        \App\Models\Tweet::factory(10)->create(['user_id' => 2]);
+        \App\Models\Tweet::factory(10)->create();
 
 
         // \App\Models\User::factory()->create([

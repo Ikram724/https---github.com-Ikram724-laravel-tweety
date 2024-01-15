@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Tweet;
+use App\Models\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        FacadesGate::define('delete-tweet', function (User $user, Tweet $tweet) {
+            return $user->id === $tweet->user_id;
+        });
     }
 }
